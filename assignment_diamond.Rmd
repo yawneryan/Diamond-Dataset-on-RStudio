@@ -1,0 +1,108 @@
+---
+title: "Diamond Assignment"
+output: html_document
+author: "Yousuf Ahmed Nahian" 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+We want to study the `diamonds` dataset.
+
+```{r}
+library(ggplot2)
+library(dplyr)
+```
+
+#### 1. Display the first few rows of the dataset.
+
+```{r}
+head(diamonds)
+```
+
+#### 2. The `cut` variable
+
+```{r}
+levels(diamonds$cut)
+
+table(diamonds$cut)
+```
+
+2.1 Determine the type of the variable `cut` using `class()`.
+
+```{r}
+class(diamonds$cut)
+```
+
+2.2 What happens if you use `typeof()` instead? Do you have an idea why?
+
+```{r}
+typeof(diamonds$cut)
+```
+
+class() = What kind of data is this for analysis?
+typeof() = How is it stored in memory?
+
+#### 3. In which package is the dataset diamonds contained in? How can you look it up?
+
+Diamonds Dataset is contained at ggplot2 package.
+Using ´help("diamonds") we can look up which package it belongs to.
+
+#### 4. Create a scatterplot to study the relationship between `carat` and `price`. Add a linear trendline. Is the relationship positive or negative?
+
+```{r}
+library(ggplot2)
+ggplot(diamonds, aes (x = carat, y = price)) + geom_smooth(method = "lm", col = "blue") + labs(title = "Relationship Between Carat And Price", x = "Carat", y = "Price")
+```
+From the graph we can see that as carat increases the price also increases. So, the relationship is Positive.
+
+
+#### 5. Create a boxplot to visualize the distribution of price across different cuts. Are there patterns that seem surprising? Suggest possible explanations.
+
+```{r}
+library(ggplot2)
+ggplot(diamonds, aes(x = cut, y = price)) + geom_boxplot(fill = "yellow") + labs(title = "The distribution of price across different cuts", x = "Cut", y= "Price")
+```
+So patterns seems surprising.
+Possible Explanations -
+
+1.Price Depends on multiple factors, not just on cut.
+
+2.Some lower carat diamonds can be more expensive due to its carat, rarity or clarity.
+
+#### 6. Create scatterplots to investigate how the relationship between carat and price differs depending on the cut of the diamond. Write \~3 sentences to describe similarities and differences you observe between cuts.
+```{r}
+ggplot(diamonds, aes(x = carat, y = price, color = cut)) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title = "Carat vs Price by Cut",
+       x = "Carat",
+       y = "Price")
+```
+All cuts show positive relationship.
+
+Premium and Ideal tend to have higher prices for the same carat compared to other.
+
+The spread of prices is wider for lower cuts, suggesting more variability in price for fair or good diamonds.
+
+#### True or False?
+
+Are the following statements about the `diamonds` dataset true or false? Show code to justify your answer.
+
+7.  The diamonds dataset contains information on about 5400 diamonds.
+
+False
+```{r}
+dim(diamonds)
+```
+
+8.  Most diamonds in the dataset are priced below \$5000.
+
+True
+```{r}
+sum(diamonds$price < 5000)
+```
+
+9.  The `geom_histogram()` function is used to show relationships between two numeric variables. (no code needed)
+
+False
